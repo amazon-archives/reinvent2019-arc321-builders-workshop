@@ -1,11 +1,6 @@
-## My Project
-
-TODO: Fill this README out!
-
-Be sure to:
-
-* Change the title in this README
-* Edit your repository description on GitHub
+# Re:Invent 2019 ARC321  Builders Workshop
+## Enabling AWS PrivateLink with the AWS Cloud Development Kit
+--
 
 ## License
 
