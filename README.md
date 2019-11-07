@@ -21,12 +21,12 @@ We will have to instanciate the following resources:
  * One [Vpc](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-ec2.Vpc.html) to configure. You can build a simple one here, for instance with a CIDR of 10.0.0.0/24  
  * Build a [SecurityGroup](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-ec2.SecurityGroup.html) for your Fargate task. We will deal with a Squid process here, so please choose to open port 3128 on all private CIDR ranges (192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8).
  * Build your Docker image, using the Dockerfile you will have in the 'docker-image' directory (check [DockerImageAsset](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-ecr-assets.DockerImageAsset.html)).
- * Build an ECS [Cluster](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-ecs.Cluster.html)
  * Prepare a [FargateTaskDefinition](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-ecs.FargateTaskDefinition.html) and add a container with the image created with the DockerImageAsset component and port 3128
  * Grant the execution role of the FargateTaskDefinition with the ability to pull the docker image from the ECR registry of the DockerImageAsset component
+ * Create a [NetworkLoadBalancer](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-elasticloadbalancingv2.NetworkLoadBalancer.html) and attach to it a [NetworkTargetGroup](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-elasticloadbalancingv2.NetworkTargetGroup.html) on port 3128 with 2 [NetworkListener](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-elasticloadbalancingv2.NetworkListener.html)s: one that will listen to port 80 and the other one to port 443.
+ * Build an ECS [Cluster](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-ecs.Cluster.html)
  * Create a [FargateService](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-ecs.FargateService.html) that will host our proxy layer application
- * Create a [NetworkLoadBalancer](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-elasticloadbalancingv2.NetworkLoadBalancer.html) and attach to it a [NetworkTargetGroup](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-elasticloadbalancingv2.NetworkTargetGroup.html) on port 3128 with 2 [NetworkListener](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-elasticloadbalancingv2.NetworkListener.html): one that will listen to port 80 and the other one to port 443.
- * Add the network target group you have created for your load balancer to your FargateService component
+ * Add the network target group you have created for your load balancer to your FargateService component  
  * Add Fargate service autoscaling capabilities  
  
  Once you're ready to deploy,  
